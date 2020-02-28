@@ -1,0 +1,24 @@
+{
+  "name": "star-wars-api",
+  "version": "1.0.0",
+  "description": "git init",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juninmd/star-wars-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juninmd/star-wars-api/issues"
+  },
+  "homepage": "https://github.com/juninmd/star-wars-api#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  }
+}
