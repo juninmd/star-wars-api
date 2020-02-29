@@ -1,7 +1,17 @@
-# Star Wars APi
+# Star Wars API
 
-git init
+> API de exemplo que consome o servico <https://swapi.co/>
 
-npm init
+<img src='./darth-vader.jpg' height="200">
 
-yarn add express axios
+Rode o seguinte comando para baixar as dependencias:
+
+```
+yarn
+```
+
+Após isso digite o seguinte comando:
+
+```
+yarn start
+```
