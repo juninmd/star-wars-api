@@ -1,13 +1,6 @@
 const app = require('express')();
 const axios = require('axios');
 
-const baseURL = 'https://swapi.co/api/';
-
-const getCharacterImageUrl = (url) => {
-  const getCharacterId = url.split('/')[5];
-  return `https://starwars-visualguide.com/assets/img/characters/${getCharacterId}.jpg`;
-}
-
 app.use((req, res, next) => {
   res.header('Content-Type', 'application/json; charset=utf-8');
   res.header('Access-Control-Allow-Origin', '*');
@@ -19,6 +12,13 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+const baseURL = 'https://swapi.co/api/';
+
+const getCharacterImageUrl = (url) => {
+  const getCharacterId = url.split('/')[5];
+  return `https://starwars-visualguide.com/assets/img/characters/${getCharacterId}.jpg`;
+}
 
 app.get('/films', async (req, res, next) => {
   try {
@@ -66,7 +66,6 @@ app.all('*', async (req, res, next) => {
     routes: ['films', 'films/id']
   })
 })
-
 
 const port = process.env.PORT || 9000;
 app.listen(port, () => {
