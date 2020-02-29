@@ -1,8 +1,12 @@
 const app = require('express')();
-const bodyParser = require('body-parser');
-const consign = require('consign');
-require('dotenv').config({ path: `./env/${process.env.NODE_ENV || 'development'}.env` });
-const config = require('./config');
+const axios = require('axios');
+
+const baseURL = 'https://swapi.co/api/';
+
+ const getCharacterImageUrl = (url) => {
+  const getCharacterId = url.split('/')[5];
+  return `https://starwars-visualguide.com/assets/img/characters/${getCharacterId}.jpg`;
+}
 
 app.use((req, res, next) => {
   res.header('Content-Type', 'application/json; charset=utf-8');
@@ -16,15 +20,48 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(bodyParser.json({ limit: '500mb' }));
-app.use(bodyParser.urlencoded({ limit: '500mb', extended: true }));
-
-consign({
-  verbose: false,
-}).include('controllers').into(app);
-
-app.listen(config.api.port, () => {
-  console.log(`Aplicação - Ativa :D | ${config.api.url}:${config.api.port}`);
+app.get('/starwars/films', async (req, res, next) => {
+  try {
+    const { data: { results } } = await axios.request({ baseURL, url: 'films' });
+    return res.send(results).status(200);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
 });
 
-module.exports = app;
+app.get('/starwars/films/:id', async (req, res, next) => {
+
+  try {
+    const filmId = req.params.id;
+    const { data } = await axios.request({ baseURL, url: `films/${filmId}` });
+
+    const charactersRequests = await Promise.all(data.characters.map(characterUrl => {
+      return axios.get(characterUrl);
+    }));
+
+    const characters = charactersRequests.map((y) => y.data).map((x) => {
+      return {
+        name: x.name,
+        gender: x.gender,
+        birthYear: x.birth_year,
+        eyeColor: x.eye_color,
+        height: x.height,
+        mass: x.mass,
+        photo: getCharacterImageUrl(x.url)
+      }
+    });
+
+    data.characters = characters;
+
+    return res.send(data).status(200);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+const port = process.env.PORT || 9000;
+app.listen(port, () => {
+  console.log(`Aplicação - Ativa :D | ${port}`);
+});

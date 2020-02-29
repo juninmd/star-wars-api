@@ -4,4 +4,4 @@ git init
 
 npm init
 
-yarn add express body-parser axios consign
+yarn add express axios
