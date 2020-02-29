@@ -64,6 +64,8 @@ app.get('/films/:id', async (req, res, next) => {
       }
     });
 
+    data.id = getFilmId(data.url);
+    data.photo = getFilmImageUrl(data.id);
     data.characters = characters;
 
     return res.send(data).status(200);
