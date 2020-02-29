@@ -34,7 +34,7 @@ app.get('/films', async (req, res, next) => {
   try {
     const { data: { results } } = await axios.request({ baseURL, url: 'films' });
     results.forEach(x => x.id = getFilmId(x.url));
-    results.forEach(x => x.id = getFilmImageUrl(x.id));
+    results.forEach(x => x.photo = getFilmImageUrl(x.id));
     return res.send(results).status(200);
   } catch (error) {
     console.error(error);
