@@ -13,7 +13,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const baseURL = 'https://swapi.co/api/';
+const baseURL = 'https://swapi.dev/api/';
 
 
 const getFilmId = (url) => {
