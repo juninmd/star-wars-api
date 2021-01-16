@@ -1,6 +1,6 @@
 # Star Wars API
 
-> API de exemplo que consome o servico <https://swapi.co/>
+> API de exemplo que consome o servico <https://swapi.dev/>
 
 <img src='./darth-vader.jpg' height="200">
 
