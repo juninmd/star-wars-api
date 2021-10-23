@@ -14,7 +14,7 @@ app.use((req, res, next) => {
 });
 
 const baseURL = 'https://swapi.dev/api/';
-
+const baseURLStarWarsVisual = 'https://starwars-visualguide.com';
 
 const getFilmId = (url) => {
   const id = url.split('/')[5];
@@ -22,12 +22,12 @@ const getFilmId = (url) => {
 }
 
 const getFilmImageUrl = (id) => {
-  return `https://starwars-visualguide.com/assets/img/films/${id}.jpg`;
+return ${baseURLStarWarsVisual}/assets/img/films/${id}.jpg;
 }
 
 const getCharacterImageUrl = (url) => {
   const getCharacterId = url.split('/')[5];
-  return `https://starwars-visualguide.com/assets/img/characters/${getCharacterId}.jpg`;
+ return ${baseURLStarWarsVisual}/assets/img/characters/${getCharacterId}.jpg;
 }
 
 app.get('/films', async (req, res, next) => {
