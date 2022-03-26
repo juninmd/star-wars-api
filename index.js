@@ -22,12 +22,12 @@ const getFilmId = (url) => {
 }
 
 const getFilmImageUrl = (id) => {
-return ${baseURLStarWarsVisual}/assets/img/films/${id}.jpg;
+return `${baseURLStarWarsVisual}/assets/img/films/${id}.jpg`;
 }
 
 const getCharacterImageUrl = (url) => {
   const getCharacterId = url.split('/')[5];
- return ${baseURLStarWarsVisual}/assets/img/characters/${getCharacterId}.jpg;
+ return `${baseURLStarWarsVisual}/assets/img/characters/${getCharacterId}.jpg`;
 }
 
 app.get('/films', async (req, res, next) => {
