@@ -4,7 +4,7 @@ const axios = require('axios');
 app.use((req, res, next) => {
   res.header('Content-Type', 'application/json; charset=utf-8');
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', req.header('access-control-request-headers' || '*'));
+  res.header('Access-Control-Allow-Headers', req.header('access-control-request-headers') || '*');
   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
 
   if (req.method === 'OPTIONS') {
@@ -35,7 +35,7 @@ app.get('/films', async (req, res, next) => {
     const { data: { results } } = await axios.request({ baseURL, url: 'films' });
     results.forEach(x => x.id = getFilmId(x.url));
     results.forEach(x => x.photo = getFilmImageUrl(x.id));
-    return res.send(results).status(200);
+    return res.status(200).send(results);
   } catch (error) {
     console.error(error);
     next(error);
@@ -45,7 +45,10 @@ app.get('/films', async (req, res, next) => {
 app.get('/films/:id', async (req, res, next) => {
 
   try {
-    const filmId = req.params.id;
+    if (!/^\d{1,3}$/.test(req.params.id)) {
+      return res.status(400).send({ error: 'invalid_film_id', message: 'id must be a positive integer' });
+    }
+    const filmId = Number(req.params.id);
     const { data } = await axios.request({ baseURL, url: `films/${filmId}` });
 
     const charactersRequests = await Promise.all(data.characters.map(characterUrl => {
@@ -68,7 +71,7 @@ app.get('/films/:id', async (req, res, next) => {
     data.photo = getFilmImageUrl(data.id);
     data.characters = characters;
 
-    return res.send(data).status(200);
+    return res.status(200).send(data);
   } catch (error) {
     console.error(error);
     next(error);
